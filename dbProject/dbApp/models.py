@@ -3,14 +3,18 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-class Admin(AbstractUser):
+class Admin(models.Model):
+    '''
+    TODO: This needs to be looked at again, the admin user needs to have some 
+    novel functionality
+    '''
 
-    id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=30, required=True)
-    first_name = models.CharField(max_length=30, required=True)
-    last_name = models.CharField(max_length=30, required=True)
-    email = models.EmailField(max_length=254, required=True)
-    is_staff = models.BooleanField(default=True)
+    # id = models.AutoField(primary_key=True)
+    # username = models.CharField(max_length=30, required=True)
+    # first_name = models.CharField(max_length=30, required=True)
+    # last_name = models.CharField(max_length=30, required=True)
+    # email = models.EmailField(max_length=254, required=True)
+    # is_staff = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         super(Admin, self).save(*args, **kwargs)
@@ -39,9 +43,9 @@ class Medication(models.Model):
     def save(self, *args, **kwargs):
         super(Medication, self).save(*args, **kwargs)
 
-class Patient(AbstractUser):
-    first_name = models.CharField(required=True, max_length=30)
-    last_name = models.CharField(required=True, max_length=30)
+
+class Patient(models.Model):
+    user = models.OneToOneField('User', on_delete=models.CASCADE)
     birthdate = models.DateField(required=True)
     age = models.SmallIntegerField()
     allergies = models.CharField(blank=True, default='')
@@ -52,9 +56,8 @@ class Patient(AbstractUser):
         super().save(*args, **kwargs)
 
 
-class Provider(AbstractUser):
-    first_name = models.CharField(required=True, max_length=30)
-    last_name = models.CharField(required=True, max_length=30)
+class Provider(models.Model):
+    user = models.OneToOneField('User', on_delete=models.CASCADE)
     phone_number = models.CharField(required=True, max_length=14)
     patients = models.ManyToManyField('Patient', on_delete=models.SET_NULL)
 
