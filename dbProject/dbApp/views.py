@@ -62,7 +62,7 @@ class PrescriptionAPI(APIView):
 			return HttpResponse("User is not authorized", status=401)
 
 
-	def post(self, request):
+	def post(self, request, format=None):
 
 		if request.user.has_perm('dbApp.add_perscriptions'):
 
@@ -78,7 +78,25 @@ class PrescriptionAPI(APIView):
 				    patient=patient, medication=medication, date_prescribed=date_prescribed, expiration=expiration, dose=dose)
 				prescription.save()
 				return Response(status=status.HTTP_201_CREATED)
-			else:
-				# error here
+
 		else:
 			return HttpResponse("User is not authorized", status=401)
+
+
+	def patch(self, request, format=None):
+		id = request.data["id"]
+		patient = request.data["patient"]
+		medication = request.data["medication"]
+		date_prescribed = request.data["date_prescribed"]
+		expiration = request.data["expiration"]
+		dose = request.data["dose"]
+
+		prescription = Prescription.objects.get(id=id)
+		prescription.patient = patient
+		prescription.medication = medication
+		prescription.date_prescribed = date_prescribed
+		prescription.expiration = expiration
+		prescription.dose = dose
+		prescription.save()
+		serialized_prescription = PrescriptionSerializer(prescription)
+		return Response(serialized_medication.data)
