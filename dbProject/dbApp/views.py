@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Medication
 from .serializers import MedicationSerializer
-from .forms import MedicationForm
+from .forms import MedicationForm, PatientRegistrationForm
+from django.contrib import messages
 
 
 class MedicationAPI(APIView):
@@ -39,4 +40,3 @@ class MedicationAPI(APIView):
         medication.save()
         serialized_medication = MedicationSerializer(medication)
         return Response(serialized_medication.data)
-

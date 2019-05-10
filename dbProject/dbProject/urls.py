@@ -19,5 +19,7 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('dbApp.urls'))
+    path('api/', include('dbApp.urls')),
+    path('', include('frontend.urls')),
+    path('auth', include('authApp.urls'))
 ]
