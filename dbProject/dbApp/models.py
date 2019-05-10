@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -10,10 +10,10 @@ class Admin(models.Model):
     '''
 
     # id = models.AutoField(primary_key=True)
-    # username = models.CharField(max_length=30, required=True)
-    # first_name = models.CharField(max_length=30, required=True)
-    # last_name = models.CharField(max_length=30, required=True)
-    # email = models.EmailField(max_length=254, required=True)
+    # username = models.CharField(max_length=30)
+    # first_name = models.CharField(max_length=30)
+    # last_name = models.CharField(max_length=30)
+    # email = models.EmailField(max_length=254)
     # is_staff = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
@@ -23,53 +23,51 @@ class Admin(models.Model):
 class Prescription(models.Model):
 
     id = models.AutoField(primary_key=True)
-    patient = models.ForeignKey('Patient', models.SET_NULL)
-    medication = models.ForeignKey('Medication', models.SET_NULL)
-    date_prescribed = models.DateTimeField(required=True)
-    expiration = models.DateField(required=True)
-    dose = models.CharField(max_length=30, required=True)
+    patient = models.ForeignKey('Patient', null=True, on_delete=models.SET_NULL)
+    medication = models.ForeignKey('Medication', null=True, on_delete=models.SET_NULL)
+    date_prescribed = models.DateTimeField()
+    expiration = models.DateField()
+    dose = models.CharField(max_length=30)
 
     def save(self, *args, **kwargs):
         super(Prescription, self).save(*args, **kwargs)
 
 
 class Medication(models.Model):
-    
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=30, unique=True, required=True)
-    instructions = models.CharField(max_length=30, required=True)
-    recommended_dose = models.CharField(max_length=30, required=True)
+    name = models.CharField(max_length=30, unique=True)
+    instructions = models.CharField(max_length=30)
+    recommended_dose = models.CharField(max_length=30)
 
     def save(self, *args, **kwargs):
         super(Medication, self).save(*args, **kwargs)
 
 
 class Patient(models.Model):
-    user = models.OneToOneField('User', on_delete=models.CASCADE)
-    birthdate = models.DateField(required=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    birthdate = models.DateField()
     age = models.SmallIntegerField()
-    allergies = models.CharField(blank=True, default='')
-    provider = models.ForeignKey('Provider', required=True, on_delete=models.SET_NULL)
-    prescriptions = models.ManyToManyField('Prescription', blank=True, on_delete=models.SET_NULL)
+    allergies = models.CharField(blank=True, default='', max_length=128)
+    provider = models.ForeignKey('Provider', on_delete=models.SET_NULL, null=True), 
+    prescriptions = models.ManyToManyField('Prescription', related_name='patient_prescriptions')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
 
 class Provider(models.Model):
-    user = models.OneToOneField('User', on_delete=models.CASCADE)
-    phone_number = models.CharField(required=True, max_length=14)
-    patients = models.ManyToManyField('Patient', on_delete=models.SET_NULL)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=14)
+    patients = models.ManyToManyField('Patient', related_name='provider_patients')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
 
 class Appointment(models.Model):
-    date_time = models.DateTimeField(required=True)
-    duration = models.TimeField(required=True)
-    patient = models.ForeignKey(Patient, on_delete=models.SET_NULL, required=True)
-    provider = models.ForeignKey(Patient, on_delete=models.SET_NULL, required=True)
+    date_time = models.DateTimeField()
+    duration = models.TimeField()
+    patient = models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True, related_name='appointment_patient')
+    provider = models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True, related_name='appointment_provider')
     note = models.CharField(blank=True, default='', max_length=1024)
 
     def save(self, *args, **kwargs):
