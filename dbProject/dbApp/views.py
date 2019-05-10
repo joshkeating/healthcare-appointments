@@ -99,4 +99,15 @@ class PrescriptionAPI(APIView):
 		prescription.dose = dose
 		prescription.save()
 		serialized_prescription = PrescriptionSerializer(prescription)
-		return Response(serialized_medication.data)
+		return Response(serialized_prescription.data)
+
+
+class AdminAPI(APIView):
+
+	def get(self, request, format=None):
+		'''show all current admins in the system'''
+
+		if request.user.has_perm('dbApp.view_admins'):
+			# return JsonResponse(status=200)
+		else:
+			return HttpResponse("User is not authorized", status=401)

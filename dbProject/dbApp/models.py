@@ -5,11 +5,13 @@ from django.contrib.auth.models import User
 
 class Admin(models.Model):
 
+    # assign custom permissions to this user type
     class Meta:
         permissions = [
             ("view_perscriptions", "View all prescriptions in the database"),
             ("add_perscriptions", "Add prescription to the database"),
             ("edit_medication", "Add or remove medications"),
+            ("view_admins", "View all admins in the database"),
         ]
 
     def save(self, *args, **kwargs):
