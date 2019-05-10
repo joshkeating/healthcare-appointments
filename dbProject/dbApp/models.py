@@ -4,17 +4,13 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Admin(models.Model):
-    '''
-    TODO: This needs to be looked at again, the admin user needs to have some 
-    novel functionality
-    '''
 
-    # id = models.AutoField(primary_key=True)
-    # username = models.CharField(max_length=30)
-    # first_name = models.CharField(max_length=30)
-    # last_name = models.CharField(max_length=30)
-    # email = models.EmailField(max_length=254)
-    # is_staff = models.BooleanField(default=True)
+    class Meta:
+        permissions = [
+            ("view_perscriptions", "View all prescriptions in the database"),
+            ("add_perscriptions", "Add prescription to the database"),
+            ("edit_medication", "Add or remove medications"),
+        ]
 
     def save(self, *args, **kwargs):
         super(Admin, self).save(*args, **kwargs)
@@ -41,7 +37,7 @@ class Medication(models.Model):
     def save(self, *args, **kwargs):
         super(Medication, self).save(*args, **kwargs)
 
-
+    
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birthdate = models.DateField()
@@ -72,4 +68,3 @@ class Appointment(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        

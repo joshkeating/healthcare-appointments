@@ -6,43 +6,15 @@ from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Medication
-from .serializers import MedicationSerializer
-from .forms import MedicationForm, PatientRegistrationForm
+from .models import Medication, Prescription
+from .serializers import MedicationSerializer, PrescriptionSerializer
+from .forms import MedicationForm, PatientRegistrationForm, PerscriptionForm
 from django.contrib import messages
 
-# Create your views here.
 
-def login(request):
+from django.http import JsonResponse
+from django.http import HttpResponse
 
-	if request.method == 'POST':
-
-        return
-    else:
-        return
-
-
-
-def register(request):
-
-	if request.method == 'POST':
-		form = UserCreationForm(request.POST)
-
-		if form.is_valid():
-            
-			form.save()
-			username = form.cleaned_data['username']
-			password = form.cleaned_data['password1']
-
-            # auth and login user
-			user = authenticate(username=username, password=password)
-            login(request, user)
-			
-			# redirect here
-	else:
-		# return the form if no input
-		form = UserCreationForm()
-	
 
 class MedicationAPI(APIView):
 
@@ -58,11 +30,11 @@ class MedicationAPI(APIView):
             name = form.cleaned_data["name"]
             instructions = form.cleaned_data["instructions"]
             recommended_dose = form.cleaned_data["recommended_dose"]
-            medication = Medication(name=name, instructions=instructions, recommended_dose=recommended_dose)
+            medication = Medication(
+                name=name, instructions=instructions, recommended_dose=recommended_dose)
             medication.save()
             return Response(status=status.HTTP_201_CREATED)
         return Response(status.HTTP_400_BAD_REQUEST)
-
 
     def patch(self, request, format=None):
         id = request.data["id"]
@@ -76,3 +48,37 @@ class MedicationAPI(APIView):
         medication.save()
         serialized_medication = MedicationSerializer(medication)
         return Response(serialized_medication.data)
+
+
+class PrescriptionAPI(APIView):
+
+	def get(self, request, format=None):
+
+		if request.user.has_perm('dbApp.view_perscriptions'):
+				prescriptions = Prescription.objects.all()
+				serializer = PrescriptionSerializer(prescriptions, many=True)
+				return JsonResponse(serializer.data, safe=False, status=200)
+		else:
+			return HttpResponse("User is not authorized", status=401)
+
+
+	def post(self, request):
+
+		if request.user.has_perm('dbApp.add_perscriptions'):
+
+			form = MedicationForm(request.POST)
+
+			if form.is_valid():
+				patient = form.cleaned_data["patient"]
+				medication = form.cleaned_data["medication"]
+				date_prescribed = form.cleaned_data["date_prescribed"]
+				expiration = form.cleaned_data["expiration"]
+				dose = form.cleaned_data["dose"]
+				prescription = Prescription(
+				    patient=patient, medication=medication, date_prescribed=date_prescribed, expiration=expiration, dose=dose)
+				prescription.save()
+				return Response(status=status.HTTP_201_CREATED)
+			else:
+				# error here
+		else:
+			return HttpResponse("User is not authorized", status=401)
