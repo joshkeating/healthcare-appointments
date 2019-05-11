@@ -6,8 +6,8 @@ from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Medication, Prescription
-from .serializers import MedicationSerializer, PrescriptionSerializer
+from .models import Medication, Prescription, Admin
+from .serializers import MedicationSerializer, PrescriptionSerializer, AdminSerializer
 from .forms import MedicationForm, PatientRegistrationForm, PerscriptionForm
 from django.contrib import messages
 
@@ -108,6 +108,10 @@ class AdminAPI(APIView):
 		'''show all current admins in the system'''
 
 		if request.user.has_perm('dbApp.view_admins'):
-			# return JsonResponse(status=200)
+
+			admins = Admin.objects.all()
+			serializer = AdminSerializer(admins, many=True)
+			return JsonResponse(serializer.data, safe=False, status=200)
+
 		else:
 			return HttpResponse("User is not authorized", status=401)

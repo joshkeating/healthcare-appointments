@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from .models import Admin
 
 
 class MedicationSerializer(serializers.Serializer):
@@ -15,3 +16,10 @@ class PrescriptionSerializer(serializers.Serializer):
     date_prescribed = serializers.DateTimeField()
     expiration = serializers.DateField()
     dose = serializers.CharField()
+
+
+
+class AdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Admin
+        fields = ('username', 'password')
