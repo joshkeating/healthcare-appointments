@@ -14,3 +14,8 @@ class PatientRegistrationForm(UserCreationForm):
     provider = forms.ModelChoiceField(queryset=Provider.objects.all(), required=False)
     birthdate = forms.DateField(required=True)
     allergies = forms.CharField(max_length=128)
+
+
+class ProviderRegistrationForm(UserCreationForm):
+    patient = forms.ModelMultipleChoiceField(queryset=Patient.objects.all(), required=False)
+    phone_number = forms.CharField(max_length=14)
