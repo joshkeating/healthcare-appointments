@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Admin
+from .models import Admin, Prescription
 
 
 class MedicationSerializer(serializers.Serializer):
@@ -9,13 +9,14 @@ class MedicationSerializer(serializers.Serializer):
     recommended_dose = serializers.CharField()
 
 
-class PrescriptionSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    patient = serializers.IntegerField()
-    medication = serializers.IntegerField()
-    date_prescribed = serializers.DateTimeField()
-    expiration = serializers.DateField()
-    dose = serializers.CharField()
+class PrescriptionSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    patient = serializers.RelatedField(source='Patient.id', read_only=True)
+    medication = serializers.RelatedField(source='Medication.id', read_only=True)
+
+    class Meta:
+        model = Prescription
+        fields = '__all__'
 
 
 class AdminSerializer(serializers.ModelSerializer):

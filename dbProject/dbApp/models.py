@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Admin(models.Model):
 
+    is_admin = models.BooleanField(default=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # assign custom permissions to this user type
@@ -48,7 +49,7 @@ class Patient(models.Model):
     age = models.SmallIntegerField()
     allergies = models.CharField(blank=True, default='', max_length=128)
     provider = models.ForeignKey('Provider', on_delete=models.SET_NULL, null=True), 
-    prescriptions = models.ManyToManyField('Prescription', related_name='patient_prescriptions')
+    prescriptions = models.ManyToManyField('Prescription', related_name='patient_prescriptions', blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -66,8 +67,8 @@ class Provider(models.Model):
 class Appointment(models.Model):
     date_time = models.DateTimeField()
     duration = models.TimeField()
-    patient = models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True, related_name='appointment_patient')
-    provider = models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True, related_name='appointment_provider')
+    patient = models.ForeignKey('Patient', on_delete=models.SET_NULL, null=True, related_name='appointment_patient')
+    provider = models.ForeignKey('Patient', on_delete=models.SET_NULL, null=True, related_name='appointment_provider')
     note = models.CharField(blank=True, default='', max_length=1024)
 
     def save(self, *args, **kwargs):

@@ -133,9 +133,9 @@ class AppointmentAPI(APIView):
         if form.is_valid():
             date_time = form.cleaned_data["date_time"]
             duration = form.cleaned_data["duration"]
-			patient = request.user.id
+            patient = request.user.id
             provider = form.cleaned_data["provider"]
-			note = form.cleaned_data["note"]
+            note = form.cleaned_data["note"]
             appointment = Appointment(
                 date_time=date_time, duration=duration, patient=patient, provider=provider, note=note)
             appointment.save()
@@ -147,15 +147,15 @@ class AppointmentAPI(APIView):
         date_time = request.data["date_time"]
         duration = request.data["duration"]
         patient = request.data["patient"]
-		provider = request.data["provider"]
-		note = request.data["note"]
+        provider = request.data["provider"]
+        note = request.data["note"]
 
         appointment = Appointment.objects.get(id=id)
         appointment.date_time = date_time
         appointment.duration = duration
         appointment.patient = patient
-		appointment.provider = provider
-		appointment.note = note
+        appointment.provider = provider
+        appointment.note = note
         appointment.save()
         serialized_appointment = AppointmentSerializer(appointment)
         return Response(serialized_appointment.data)
