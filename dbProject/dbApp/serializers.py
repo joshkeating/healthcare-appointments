@@ -18,8 +18,16 @@ class PrescriptionSerializer(serializers.Serializer):
     dose = serializers.CharField()
 
 
-
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
         fields = ('username', 'password')
+
+
+class AppointmentSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    date_time = serializers.DateTimeField()
+    duration = serializers.TimeField()
+    patient = serializers.IntegerField()
+    provider = serializers.IntegerField()
+    note = serializers.CharField()
