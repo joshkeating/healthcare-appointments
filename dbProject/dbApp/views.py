@@ -123,7 +123,7 @@ class AppointmentAPI(APIView):
 
     def get(self, request, format=None):
         '''get appointments for current user'''
-		appointment = Appointment.objects.get(patient=request.user.id)
+        appointment = Appointment.objects.get(patient=request.user.id)
         serialized_appointment = AppointmentSerializer(appointment)
         return Response(serialized_appointment.data)
 	
