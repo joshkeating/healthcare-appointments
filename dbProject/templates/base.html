@@ -39,6 +39,12 @@
           <a class="nav-link" href="{% url 'provider_login' %}">Provider Login</a>
         </li>
         {% else %}
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="{% url 'patient_appointment' %}">My Appointments</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'patient_prescription' %}">My Prescriptions</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}">Logout</a>
         </li>
