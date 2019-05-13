@@ -4,17 +4,18 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Admin(models.Model):
-    '''
-    TODO: This needs to be looked at again, the admin user needs to have some 
-    novel functionality
-    '''
 
-    # id = models.AutoField(primary_key=True)
-    # username = models.CharField(max_length=30)
-    # first_name = models.CharField(max_length=30)
-    # last_name = models.CharField(max_length=30)
-    # email = models.EmailField(max_length=254)
-    # is_staff = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    # assign custom permissions to this user type
+    class Meta:        
+        permissions = [
+            ("view_perscriptions", "View all prescriptions in the database"),
+            ("add_perscriptions", "Add prescription to the database"),
+            ("edit_medication", "Add or remove medications"),
+            ("view_admins", "View all admins in the database"),
+        ]
 
     def save(self, *args, **kwargs):
         super(Admin, self).save(*args, **kwargs)
@@ -41,14 +42,14 @@ class Medication(models.Model):
     def save(self, *args, **kwargs):
         super(Medication, self).save(*args, **kwargs)
 
-
+    
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birthdate = models.DateField()
     age = models.SmallIntegerField()
     allergies = models.CharField(blank=True, default='', max_length=128)
     provider = models.ForeignKey('Provider', on_delete=models.SET_NULL, null=True), 
-    prescriptions = models.ManyToManyField('Prescription', related_name='patient_prescriptions')
+    prescriptions = models.ManyToManyField('Prescription', related_name='patient_prescriptions', blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -66,10 +67,9 @@ class Provider(models.Model):
 class Appointment(models.Model):
     date_time = models.DateTimeField()
     duration = models.TimeField()
-    patient = models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True, related_name='appointment_patient')
-    provider = models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True, related_name='appointment_provider')
+    patient = models.ForeignKey('Patient', on_delete=models.SET_NULL, null=True, related_name='appointment_patient')
+    provider = models.ForeignKey('Patient', on_delete=models.SET_NULL, null=True, related_name='appointment_provider')
     note = models.CharField(blank=True, default='', max_length=1024)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        
