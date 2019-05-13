@@ -56,7 +56,7 @@ def provider_registration(request):
 			password = form.cleaned_data['password']
 			first_name = form.cleaned_data['first_name']
 			last_name = form.cleaned_data['last_name']
-			user = User.objects.create_user(username, email, password, first_name=first_name, 
+			user = User.objects.create_user(username, email, password, first_name=first_name,
 											last_name=last_name)
 			phone_number = form.cleaned_data['phone_number']
 			patients = form.cleaned_data['patients']
