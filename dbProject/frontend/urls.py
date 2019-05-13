@@ -8,5 +8,4 @@ urlpatterns = [
     path('provider_registration', render_provider_registration, name="provider_registration"),
     path('login', render_login, name="loginpage"),
     path('patient_prescription', render_patient_prescription, name="patient_prescription"),
-
 ]
