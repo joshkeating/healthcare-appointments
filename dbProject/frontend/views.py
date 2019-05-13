@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from dbApp.forms import PatientRegistrationForm, ProviderRegistrationForm
+from dbApp.forms import PatientRegistrationForm, ProviderRegistrationForm, LoginForm
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -21,16 +21,11 @@ def render_homepage(request):
         return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
     return render(request, 'index.html', {})
 
-def render_patient_login(request):
+def render_login(request):
     if request.method != "GET":
         return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    return render(request, 'patient_login.html')
-
-def render_provider_login(request):
-    if request.method != "GET":
-        return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    return render(request, 'provider_login.html')
-
+    form = LoginForm()
+    return render(request, 'login.html', { 'form': form })
 
 def render_patient_prescription(request):
     if request.method != "GET":
