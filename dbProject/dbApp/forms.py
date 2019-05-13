@@ -34,3 +34,8 @@ class AppointmentForm(forms.Form):
     duration = forms.TimeField(required=True)
     provider = forms.ModelChoiceField(queryset=Provider.objects.all(), required=True)
     note = forms.CharField(widget=forms.Textarea)
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput())

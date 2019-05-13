@@ -4,8 +4,23 @@ from rest_framework import status
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from dbApp.forms import PatientRegistrationForm, ProviderRegistrationForm
+from dbApp.forms import PatientRegistrationForm, ProviderRegistrationForm, LoginForm
 from dbApp.models import Patient, Provider
+
+
+def loginuser(request):
+	form = LoginForm(request.POST)
+	if form.is_valid():
+		user = authenticate(request, username=form.cleaned_data["username"], password=form.cleaned_data["password"])
+		if user is not None:
+			login(request, user)
+			messages.success(request,('You have successfully logged in...'))
+			return redirect('homepage')
+		else:
+			messages.error(request, 'Incorrect credentials.')
+			return redirect('loginpage')
+	else:
+		return redirect('loginpage')
 
 
 def logoutuser(request):
