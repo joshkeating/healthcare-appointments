@@ -120,7 +120,6 @@ class AdminAPI(APIView):
 			return HttpResponse("User is not authorized", status=401)
 
 
-
 class AppointmentAPI(APIView):
 
     def get(self, request, format=None):

@@ -20,7 +20,7 @@ class ProviderRegistrationForm(UserCreationForm):
     patient = forms.ModelMultipleChoiceField(queryset=Patient.objects.all(), required=False)
     phone_number = forms.CharField(max_length=14)
 
-    
+
 class PerscriptionForm(forms.Form):
     patient = forms.ModelChoiceField(queryset=Patient.objects.all(), required=True)
     medication = forms.ModelChoiceField(queryset=Medication.objects.all(), required=True)
