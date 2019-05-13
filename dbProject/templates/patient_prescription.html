@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Perscription Information</h1>
+
+{% if user.is_authenticated %}
+
+<p>Medication:{{ user.profile.medication }}</p>
+<p>Perscription Date:{{ user.profile.date_prescribed }}</p>
+
+{% endif %}
+
+
+{% endblock %}

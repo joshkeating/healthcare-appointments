@@ -9,7 +9,7 @@ class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # assign custom permissions to this user type
-    class Meta:        
+    class Meta:
         permissions = [
             ("view_perscriptions", "View all prescriptions in the database"),
             ("add_perscriptions", "Add prescription to the database"),

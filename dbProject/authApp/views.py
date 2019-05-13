@@ -36,10 +36,10 @@ def patient_registration(request):
 		return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
 	form = PatientRegistrationForm(request.POST)
 	if form.is_valid():
-		if form.cleaned_data['password'] == form.cleaned_data['passwordconf']:
+		if form.cleaned_data['password1'] == form.cleaned_data['password2']:
 			username = form.cleaned_data['username']
 			email = form.cleaned_data['email']
-			password = form.cleaned_data['password']
+			password = form.cleaned_data['password1']
 			first_name = form.cleaned_data['first_name']
 			last_name = form.cleaned_data['last_name']
 			user = User.objects.create_user(username, email, password, first_name=first_name, 
@@ -71,7 +71,7 @@ def provider_registration(request):
 			password = form.cleaned_data['password']
 			first_name = form.cleaned_data['first_name']
 			last_name = form.cleaned_data['last_name']
-			user = User.objects.create_user(username, email, password, first_name=first_name, 
+			user = User.objects.create_user(username, email, password, first_name=first_name,
 											last_name=last_name)
 			phone_number = form.cleaned_data['phone_number']
 			patients = form.cleaned_data['patients']
