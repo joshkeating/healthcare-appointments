@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from dbApp.forms import PatientRegistrationForm, ProviderRegistrationForm
 from rest_framework import status
+from rest_framework.response import Response
+
 
 def render_registration(request):
     if request.method != "GET":
