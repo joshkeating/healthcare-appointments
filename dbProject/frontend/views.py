@@ -30,6 +30,9 @@ def render_login(request):
 def render_patient_prescription(request):
     if request.method != "GET":
         return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    
     return render(request, 'patient_prescription.html')
+
+def render_provider_prescription(request):
+    if request.method != "GET":
+        return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    return render(request, 'provider_prescription.html')

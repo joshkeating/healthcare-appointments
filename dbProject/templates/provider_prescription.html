@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>All Patient Prescriptions</h1>
+
+{% if user.is_authenticated %}
+
+    {% for patient in user.provider.patients.all %}
+
+        <div>
+            <h3>Patient  {{forloop.counter0}}</h3>
+            <p>Name:  {{ patient.fullname }}</p>
+            <p>Allergies:  {{ patient.allergies }}</p>
+
+            {% for prescription in patient.prescriptions.all %}
+
+                <div>
+                    <h4>Prescription  {{forloop.counter0}}</h3>
+                    <p>Medication:  {{ prescription.medication.name }}</p>
+                    <p>Date Prescribed:  {{ prescription.date_prescribed }}</p>
+                    <p>Expiration:  {{ prescription.expiration }}</p>
+                    <p>Dose:  {{ prescription.dose }}</p>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+
+{% endblock %}
