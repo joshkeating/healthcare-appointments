@@ -20,9 +20,16 @@ class PrescriptionSerializer(serializers.ModelSerializer):
 
 
 class AdminSerializer(serializers.ModelSerializer):
+
+    # username = serializers.CharField(source='user.profile.username')
+    username = serializers.SerializerMethodField()
+
+    def get_username(self, obj):
+        return obj.user.username
+
     class Meta:
         model = Admin
-        fields = ('username', 'password')
+        fields = ('id', 'username')
 
 
 class AppointmentSerializer(serializers.Serializer):
