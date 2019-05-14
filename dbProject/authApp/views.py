@@ -34,12 +34,13 @@ def logoutuser(request):
 def patient_registration(request):
 	if request.method != "POST":
 		return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
+	print(request.POST)
 	form = PatientRegistrationForm(request.POST)
 	if form.is_valid():
-		if form.cleaned_data['password'] == form.cleaned_data['passwordconf']:
+		if form.cleaned_data['password1'] == form.cleaned_data['password2']:
 			username = form.cleaned_data['username']
 			email = form.cleaned_data['email']
-			password = form.cleaned_data['password']
+			password = form.cleaned_data['password1']
 			first_name = form.cleaned_data['first_name']
 			last_name = form.cleaned_data['last_name']
 			user = User.objects.create_user(username, email, password, first_name=first_name, 
@@ -53,11 +54,14 @@ def patient_registration(request):
 			# add to provider list of patients
 			patient.save()
 			messages.success(request,('You have been registered.'))
+			# sign user in
 			return redirect('homepage')
 		else:
-			return Response('Passwords did not match.', status=status.HTTP_400_BAD_REQUEST)
+			messages.error(request, 'Passwords do not match.')
+			return redirect('patient_registration')
 	else:
-		return Response('Invalid registration request.', status=status.HTTP_400_BAD_REQUEST)
+		messages.error(request, 'Invalid registration request.')
+		return redirect('patient_registration')
 
 
 def provider_registration(request):
