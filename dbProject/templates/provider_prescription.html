@@ -3,6 +3,8 @@
 {% block content %}
 
 <h1>All Patient Prescriptions</h1>
+<div style="padding-bottom:40px"></div>
+
 
 {% if user.is_authenticated %}
 
@@ -23,7 +25,11 @@
                     <p>Dose:  {{ prescription.dose }}</p>
                 </div>
 
+                <a href="/delete_prescription/{{prescription.id}}">Delete</a>
+
             {% endfor %}
+
+        <div style="padding-bottom:40px"></div>
 
         </div>
 
