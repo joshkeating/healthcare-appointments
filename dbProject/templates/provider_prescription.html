@@ -11,8 +11,8 @@
     {% for patient in user.provider.patients.all %}
 
         <div>
-            <h3>Patient  {{forloop.counter0}}</h3>
-            <a href="/add_prescription">Add prescription</a>
+            <h3>Patient  {{patient.user.first_name}} {{patient.user.last_name}}</h3>
+            <a href="{% url 'add_prescription' %}">Add prescription</a>
 
             <p>Name:  {{ patient.fullname }}</p>
             <p>Allergies:  {{ patient.allergies }}</p>
@@ -27,7 +27,7 @@
                     <p>Dose:  {{ prescription.dose }}</p>
                 </div>
 
-                <a href="/delete_prescription/{{prescription.id}}">Delete</a>
+                <a href="{% url 'delete_prescription' prescription.id %}">Delete</a>
 
             {% endfor %}
 

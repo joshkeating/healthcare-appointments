@@ -2,7 +2,14 @@ Patients
     username: sick_person1
     password: iamverysick3
 
+    sick_person3
+    iamverysick3
+
+    sick_person4
+    iamverysick3
+
 
 Providers
     username: provider1
     password: iamadoctor
+

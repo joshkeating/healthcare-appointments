@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Add Prescription{% endblock %}
+{% block title %}Add Medication{% endblock %}
 
 {% block content %}
 
 <h1>Prescription</h1>
 
-<form method="POST" action="{% url 'prescriptions' %}">
+<form method="POST" action="{% url 'medications' %}">
     <!-- Add cross site request forgery token -->
     {% csrf_token %}
     {{ form }}
