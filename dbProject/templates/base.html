@@ -37,22 +37,30 @@
         </li>
         {% else %}
 
-          {% if user.profile.patient %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'patient_prescription' %}">My Prescriptions</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-            </li>
-          {% endif %}
+        {% if user.patient %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'patient_prescription' %}">My Prescriptions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'patient_appointments' %}">My Appointments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+        {% else %}
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'provider_prescription' %}">Patient Prescriptions</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'provider_prescription' %}">Patient Prescriptions</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'provider_appointments' %}">Patient Appointments</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+        {% endif %}
 
         {% endif %}
       </ul>

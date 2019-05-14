@@ -34,7 +34,6 @@ def logoutuser(request):
 def patient_registration(request):
 	if request.method != "POST":
 		return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
-	print(request.POST)
 	form = PatientRegistrationForm(request.POST)
 	if form.is_valid():
 		if form.cleaned_data['password1'] == form.cleaned_data['password2']:
@@ -53,8 +52,10 @@ def patient_registration(request):
 							allergies=allergies)
 			# add to provider list of patients
 			patient.save()
+			provider.patients.add(patient)
+			provider.save()
 			messages.success(request,('You have been registered.'))
-			# sign user in
+			login(request, user)
 			return redirect('homepage')
 		else:
 			messages.error(request, 'Passwords do not match.')

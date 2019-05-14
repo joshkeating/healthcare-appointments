@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Appointments</h1>
+
+{% if user.is_authenticated %}
+
+    {% for appointment in appointments %}
+
+        <div>
+            <h3>Appointment with {{appointment.provider}}</h3>
+            <p>Patient: {{ appointment.patient }}</p>
+            <p>Date:  {{ appointment.date_time }}</p>
+            <p>Duration:  {{ appointment.duration }}</p>
+            <p>Note:  {{ appointment.note }}</p>
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Appointments</h1>
+
+{% if user.is_authenticated %}
+<div>
+    <h3>Create Appointment</h3>
+    <form method="POST" action="{% url 'appointments' %}">
+        <!-- Add cross site request forgery token -->
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Add Appointment</button>
+    </form>
+</div>
+
+{% for appointment in appointments %}
+
+<div>
+    <h3>Appointment with {{appointment.patient}}</h3>
+    <p>Patient: {{ appointment.patient }}</p>
+    <p>Date: {{ appointment.date_time }}</p>
+    <p>Duration: {{ appointment.duration }}</p>
+    <p>Note: {{ appointment.note }}</p>
+    <a href="{% url 'delete_appointment' appointment.id %}">Delete</a>
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+
+{% endblock %}
