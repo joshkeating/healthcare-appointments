@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from dbApp.forms import PatientRegistrationForm, ProviderRegistrationForm, LoginForm
+from dbApp.forms import PatientRegistrationForm, ProviderRegistrationForm, LoginForm, PerscriptionForm
 from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -39,7 +39,14 @@ def render_provider_prescription(request):
         return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
     return render(request, 'provider_prescription.html')
 
-
 def delete_prescription(request, id):
     get_object_or_404(Prescription, pk=id).delete()
     return render(request, 'provider_prescription.html')
+
+
+def render_add_prescription(request):
+    if request.method != "GET":
+        return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+    form = PerscriptionForm()
+    return render(request, 'add_prescription.html', { 'form': form })
