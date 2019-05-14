@@ -63,7 +63,6 @@ class PrescriptionAPI(APIView):
 
 
 	def post(self, request, format=None):
-            
         # accessible to providers, and admins
 
 		if request.user.has_perm('dbApp.add_perscriptions'):

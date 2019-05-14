@@ -1,0 +1,8 @@
+Patients
+    username: sick_person1
+    password: iamverysick3
+
+
+Providers
+    username: provider1
+    password: iamadoctor

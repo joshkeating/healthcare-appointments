@@ -2,12 +2,21 @@
 
 {% block content %}
 
-<h1>Perscription Information</h1>
+<h1>Prescription Information</h1>
 
 {% if user.is_authenticated %}
 
-<p>Medication:{{ user.profile.medication }}</p>
-<p>Perscription Date:{{ user.profile.date_prescribed }}</p>
+    {% for prescription in user.patient.prescriptions.all %}
+
+        <div>
+            <h3>Prescription  {{forloop.counter0}}</h3>
+            <p>Medication:  {{ prescription.medication.name }}</p>
+            <p>Date Prescribed:  {{ prescription.date_prescribed }}</p>
+            <p>Expiration:  {{ prescription.expiration }}</p>
+            <p>Dose:  {{ prescription.dose }}</p>
+        </div>
+
+    {% endfor %}
 
 {% endif %}
 
