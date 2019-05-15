@@ -20,46 +20,46 @@ Each of these user types are represented as models in the database and each have
 
  - GET
     - returns all medications in the database
-    - accessable to `Admin`
+    - accessible to `Admin`
  - POST
     - add medications to the database
-    - accessable to `Admin`
+    - accessible to `Admin`
  - PATCH
     - update medications in the database
-    - accessable to `Admin`
+    - accessible to `Admin`
 
 #### PrescriptionAPI
 
  - GET
     - returns prescriptions in the database
-    - accessable to `Admin`, `Provider`, `Patient`
+    - accessible to `Admin`, `Provider`, `Patient`
  - POST
     - add prescriptions to the database
-    - accessable to `Admin`, `Provider`
+    - accessible to `Admin`, `Provider`
  - PATCH
     - update prescriptions in the database
-    - accessable to `Admin`
+    - accessible to `Admin`
 
 #### AdminAPI
 
  - GET
     - returns all admins in the database
-    - accessable to `Admin`
+    - accessible to `Admin`
 
 #### AppointmentAPI
 
  - GET
     - returns appointments in the database
-    - accessable to `Admin`, `Provider`, `Patient`
+    - accessible to `Admin`, `Provider`, `Patient`
  - POST
     - add appointments to the database
-    - accessable to `Admin`, `Provider`, `Patient`
+    - accessible to `Admin`, `Provider`, `Patient`
  - PATCH
     - update appointments in the database
-    - accessable to `Admin`
+    - accessible to `Admin`
 
 #### UserCreationAPI
 
 - POST
     - add patient to the database
-    - accessable to `Admin`, `Provider`, `Patient`
+    - accessible to `Admin`, `Provider`, `Patient`
