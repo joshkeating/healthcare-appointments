@@ -37,7 +37,7 @@ class MedicationForm(forms.Form):
 class PatientRegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField()
+    email = forms.CharField(max_length=30)
     age = forms.IntegerField(required=True)
     provider = forms.ModelChoiceField(queryset=Provider.objects.all(), required=False)
     birthdate = forms.DateField(required=True)
@@ -47,8 +47,8 @@ class PatientRegistrationForm(UserCreationForm):
 class ProviderRegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField()
-    patient = forms.ModelMultipleChoiceField(queryset=Patient.objects.all(), required=False)
+    email = forms.CharField(max_length=50)
+    patients = forms.ModelMultipleChoiceField(queryset=Patient.objects.all(), required=False)
     phone_number = forms.CharField(max_length=14)
 
 

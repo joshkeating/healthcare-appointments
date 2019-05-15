@@ -104,6 +104,6 @@ def render_add_medication(request):
     except:
         return redirect('homepage')
     form = MedicationForm()
-    return render(request, 'add_medication.html', { 'form': form })
+    return render(request, 'add_medications.html', { 'form': form })
 
 

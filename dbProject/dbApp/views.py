@@ -39,8 +39,9 @@ class MedicationAPI(APIView):
 			medication = Medication(
 				name=name, instructions=instructions, recommended_dose=recommended_dose)
 			medication.save()
-			return Response(status=status.HTTP_201_CREATED)
-		return Response(status.HTTP_400_BAD_REQUEST)
+			messages.success(request, 'Medication added!')
+			return redirect('medications')
+		return redirect('medications')
 
 	def patch(self, request, format=None):
 		try:

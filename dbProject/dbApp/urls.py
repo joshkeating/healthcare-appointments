@@ -3,7 +3,7 @@ from .views import MedicationAPI, PrescriptionAPI, AdminAPI, AppointmentAPI
 
 
 urlpatterns = [
-    path(r'medications', MedicationAPI.as_view()),
+    path(r'medications', MedicationAPI.as_view(), name='medications'),
     path(r'prescriptions', PrescriptionAPI.as_view(), name="prescriptions"),
     path(r'appointments', AppointmentAPI.as_view(), name="appointments"),
     path(r'admins', AdminAPI.as_view()),

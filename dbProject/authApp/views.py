@@ -11,10 +11,11 @@ from dbApp.models import Patient, Provider
 def loginuser(request):
 	form = LoginForm(request.POST)
 	if form.is_valid():
-		user = authenticate(request, username=form.cleaned_data["username"], password=form.cleaned_data["password"])
+		user = authenticate(
+			request, username=form.cleaned_data["username"], password=form.cleaned_data["password"])
 		if user is not None:
 			login(request, user)
-			messages.success(request,('You have successfully logged in...'))
+			messages.success(request, ('You have successfully logged in...'))
 			return redirect('homepage')
 		else:
 			messages.error(request, 'Incorrect credentials.')
@@ -26,7 +27,7 @@ def loginuser(request):
 def logoutuser(request):
 	logout(request)
 	# Show message
-	messages.success(request,('You have been logged out.'))
+	messages.success(request, ('You have been logged out.'))
 	# Redirect to a success page.
 	return redirect('homepage')
 
@@ -42,19 +43,19 @@ def patient_registration(request):
 			password = form.cleaned_data['password1']
 			first_name = form.cleaned_data['first_name']
 			last_name = form.cleaned_data['last_name']
-			user = User.objects.create_user(username, email, password, first_name=first_name, 
+			user = User.objects.create_user(username, email, password, first_name=first_name,
 											last_name=last_name)
 			birthdate = form.cleaned_data['birthdate']
 			age = form.cleaned_data['age']
 			provider = form.cleaned_data['provider']
 			allergies = form.cleaned_data['allergies']
 			patient = Patient(user=user, birthdate=birthdate, age=age, provider=provider,
-							allergies=allergies)
+							  allergies=allergies)
 			# add to provider list of patients
 			patient.save()
 			provider.patients.add(patient)
 			provider.save()
-			messages.success(request,('You have been registered.'))
+			messages.success(request, ('You have been registered.'))
 			login(request, user)
 			return redirect('homepage')
 		else:
@@ -68,23 +69,29 @@ def patient_registration(request):
 def provider_registration(request):
 	if request.method != "POST":
 		return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
+	print(request.POST)
 	form = ProviderRegistrationForm(request.POST)
 	if form.is_valid():
-		if form.cleaned_data['password'] == form.cleaned_data['passwordconf']:
+		if form.cleaned_data['password1'] == form.cleaned_data['password2']:
 			username = form.cleaned_data['username']
 			email = form.cleaned_data['email']
-			password = form.cleaned_data['password']
+			password = form.cleaned_data['password1']
 			first_name = form.cleaned_data['first_name']
 			last_name = form.cleaned_data['last_name']
 			user = User.objects.create_user(username, email, password, first_name=first_name,
 											last_name=last_name)
 			phone_number = form.cleaned_data['phone_number']
 			patients = form.cleaned_data['patients']
-			provider = Provider(user=user, phone_number=phone_number, patients=patients)
+			provider = Provider(
+				user=user, phone_number=phone_number)
+			if len(patients) > 0:
+				provider.patients.set(patients)
 			provider.save()
-			messages.success(request,('You have been registered.'))
+			messages.success(request, ('You have been registered.'))
 			return redirect('homepage')
 		else:
-			return Response('Passwords did not match.', status=status.HTTP_400_BAD_REQUEST)
+			messages.error(request, 'Passwords do not match.')
+			return redirect('provider_registration')
 	else:
-		return Response('Invalid registration request.', status=status.HTTP_400_BAD_REQUEST)
+		messages.error(request, 'Invalid registration request.')
+		return redirect('provider_registration')
