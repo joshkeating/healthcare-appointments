@@ -13,6 +13,7 @@ from django.contrib import messages
 from datetime import datetime
 from time import strptime
 
+from django.contrib.auth.decorators import permission_required
 
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -58,9 +59,9 @@ class MedicationAPI(APIView):
 		except:
 			return Response('Could not edit medication.', status=status.HTTP_400_BAD_REQUEST)
 
-
 class PrescriptionAPI(APIView):
 
+	# @permission_required('dbApp.view_perscriptions')
 	def get(self, request, format=None):
 
 		if request.user.has_perm('dbApp.view_perscriptions'):
@@ -70,6 +71,7 @@ class PrescriptionAPI(APIView):
 		else:
 			return Response("User is not authorized", status=status.HTTP_401_UNAUTHORIZED)
 
+	# @permission_required('dbApp.add_perscriptions')
 	def post(self, request, format=None):
 		# accessible to providers, and admins
 
