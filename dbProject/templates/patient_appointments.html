@@ -16,9 +16,35 @@
               <p class="card-text">Duration:  {{ appointment.duration }}</p>
               <p class="card-text">Note:  {{ appointment.note }}</p>
 
-              <a href="#" class="btn btn-primary">Start Appointment</a>
+              <a href="#" id="start-appt" class="btn btn-primary">Start Appointment</a>
             </div>
         </div>
+
+
+        <script>
+
+            const createHashCode = (str) => {
+                let hash = 0;
+                if (str.length == 0) {
+                    return hash;
+                }
+                for (let i = 0; i < str.length; i++) {
+                    let char = str.charCodeAt(i);
+                    hash = ((hash<<5)-hash)+char;
+                    hash = hash & hash; // Convert to 32bit integer
+                }
+                return hash;
+            };
+
+            document.querySelector('#start-appt').onclick = () =>  {
+                
+                // hash patient + docter + appt time for unique room?
+                let combo = "{{ appointment.patient }}" + "{{ appointment.date_time }}";
+                let roomHash = createHashCode(combo)
+
+                window.location.pathname = 'chat/' + roomHash + '/';
+            };
+        </script>
 
     {% endfor %}
 
