@@ -108,13 +108,19 @@ def render_add_medication(request):
     form = MedicationForm()
     return render(request, 'add_medications.html', { 'form': form })
 
-# chat
+# -- chat --
 
+# dep
 def chathomepage(request):
     return render(request, "chat/chatselect.html", {})
 
+
 def chatroompage(request, room_name):
+
+    user = request.user
+
     return render(request, 'chat/chatroom.html', {
-    'room_name_json': mark_safe(json.dumps(room_name))
+    'room_name_json': mark_safe(json.dumps(room_name)),
+    'user' : user
     })
 
