@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Login{% endblock %}
 
@@ -9,7 +10,15 @@
 <form method="POST" action="{% url 'login' %}">
     <!-- Add cross site request forgery token -->
     {% csrf_token %}
-    {{ form }}
+
+    <div class="row">
+        <div class="col-6">
+            {{ form.username|as_crispy_field }}
+        </div>
+        <div class="col-6">
+            {{ form.password|as_crispy_field }}
+        </div>
+    </div>
 
     <button type="submit" class="btn btn-primary">Login</button>
 </form>

@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'frontend',
     'authApp',
     'channels',
-
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +136,9 @@ CHANNEL_LAYERS = {
     },
 }
 
-
-
 DOMAIN_NAME = ''
+
+
+# set form style
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
