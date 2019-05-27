@@ -17,17 +17,45 @@
 </div>
 
 {% for appointment in appointments %}
-
-<div>
-    <h3>Appointment with {{appointment.patient}}</h3>
-    <p>Patient: {{ appointment.patient }}</p>
-    <p>Date: {{ appointment.date_time }}</p>
-    <p>Duration: {{ appointment.duration }}</p>
-    <p>Note: {{ appointment.note }}</p>
-    <a href="{% url 'delete_appointment' appointment.id %}">Delete</a>
+<div class="card m-3">
+    <h5 class="card-header">Appointment with {{appointment.patient}}</h5>
+    <div class="card-body">
+        <p class="card-text">Patient: {{ appointment.patient }}</p>
+        <p class="card-text">Date: {{ appointment.date_time }}</p>
+        <p class="card-text">Duration: {{ appointment.duration }}</p>
+        <p class="card-text">Note: {{ appointment.note }}</p>
+        <a href="#" id="start-appt" class="btn btn-primary" onclick="goToRoom('{{ appointment.patient }}', '{{ appointment.date_time }}')">Start Appointment</a>
+        <a href="{% url 'delete_appointment' appointment.id %}" class="btn btn-danger">Delete</a>
+    </div>
 </div>
 
 {% endfor %}
+
+<script>
+
+    const createHashCode = (str) => {
+        let hash = 0;
+        if (str.length == 0) {
+            return hash;
+        }
+        for (let i = 0; i < str.length; i++) {
+            let char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        return hash;
+    };
+
+    const goToRoom = (patient, date_time) => {
+        // // // hash patient + docter + appt time for unique room?
+        let combo = patient + date_time;
+        let roomHash = createHashCode(combo)
+
+        window.location.pathname = 'chat/' + roomHash + '/';
+    };
+
+    
+</script>
 
 {% endif %}
 

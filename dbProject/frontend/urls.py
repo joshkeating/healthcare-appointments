@@ -4,7 +4,7 @@ from .views import render_registration, render_homepage, \
     render_login, render_provider_registration, render_patient_prescription, \
     render_provider_prescription, delete_prescription, render_add_prescription, \
     render_patient_appointments, render_provider_appointments, delete_appointment, \
-    render_add_medication, chathomepage, chatroompage 
+    render_add_medication, chatroompage 
 
 urlpatterns = [
     path('', render_homepage, name="homepage"),
@@ -19,7 +19,6 @@ urlpatterns = [
     path('patient_appointments', render_patient_appointments, name='patient_appointments'),
     path('provider_appointments', render_provider_appointments, name='provider_appointments'),
     path('add_medication', render_add_medication, name='add_medication'),
-    path('chat/', chathomepage, name='chathomeN'),
     re_path(r'^chat/(?P<room_name>[^/]+)/$', chatroompage, name='chatroompageN'),
 
 ]
