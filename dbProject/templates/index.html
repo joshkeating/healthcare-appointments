@@ -2,8 +2,60 @@
 
 {% block content %}
 
-<div>
-    <h1>Welcome to the Healthcare App</h1>
+
+
+<div class="jumbotron" style="background-color: white">
+    <h1 class="display-4">Welcome to the Healthcare App!</h1>
+    <p class="lead">Get faster answers and medications from your healthcare professional. </p>
+    <hr class="my-4">
+
+    {% if user.is_authenticated %}
+    <h4>Quicklinks</h4>
+
+    {% if user.patient %}
+    <a href="{% url 'patient_prescription' %}" class="btn btn-primary btn-lg" style="margin-right: 20px">My
+        Prescriptions</a>
+    <a href="{% url 'patient_appointments' %}" class="btn btn-primary btn-lg">My
+        Appointments</a>
+
+    {% else %}
+
+    <a href="{% url 'provider_prescription' %}" class="btn btn-primary btn-lg" style="margin-right: 20px">All Patient
+        Prescriptions</a>
+    <a href="{% url 'provider_appointments' %}" class="btn btn-primary btn-lg">All Patient
+        Appointments</a>
+
+    {% endif %}
+
+
+    {% else %}
+
+    <p>Sign-up is quick and easy, give it a try.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'register_patient' %}">Register</a>
+
+    {% endif %}
+
+
 </div>
+
+
+<div style="padding-left: 32px">
+
+    <h3>About Us</h3>
+    <p>
+        Started in 2019, we wanted to build a platform that helps patients schedule quick appointments with their
+        doctors
+        and keep track of their prescriptions. By allowing patients to chat in real time with their providers, they can
+        eliminate the need for time consuming visits.
+    </p>
+    <p>
+        Healthcare professionals are given an easy way to mange their patients medications and prescriptions. In giving
+        providers the ability to prescribe medications immediately after an e-appointment, they cut down on time
+        consuming
+        administrative work
+    </p>
+
+</div>
+
 
 {% endblock %}
