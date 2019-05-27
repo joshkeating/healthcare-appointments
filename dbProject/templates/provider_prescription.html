@@ -10,30 +10,33 @@
 
     {% for patient in user.provider.patients.all %}
 
-        <div>
-            <h3>Patient  {{patient.user.first_name}} {{patient.user.last_name}}</h3>
-            <a href="{% url 'add_prescription' %}">Add prescription</a>
-
-            <p>Name:  {{ patient.fullname }}</p>
-            <p>Allergies:  {{ patient.allergies }}</p>
-
-            {% for prescription in patient.prescriptions.all %}
-
-                <div>
-                    <h4>Prescription  {{forloop.counter0}}</h3>
-                    <p>Medication:  {{ prescription.medication.name }}</p>
-                    <p>Date Prescribed:  {{ prescription.date_prescribed }}</p>
-                    <p>Expiration:  {{ prescription.expiration }}</p>
-                    <p>Dose:  {{ prescription.dose }}</p>
-                </div>
-
-                <a href="{% url 'delete_prescription' prescription.id %}">Delete</a>
-
-            {% endfor %}
-
-        <div style="padding-bottom:40px"></div>
-
+    <div class="card m-3">
+        <div class="card-body">
+            <h3 class="card-title">Patient: {{patient.user.first_name}} {{patient.user.last_name}}</h3>
+            <p class="card-text">Allergies:  {{ patient.allergies }}</p>
+            <a href="{% url 'add_prescription' %}" class="btn btn-primary">Add prescription</a>
         </div>
+
+
+        {% for prescription in patient.prescriptions.all %}
+
+            <div class="card w-50" style="margin: 20px">
+                <div class="card-body">
+                    <h3 class="card-title">{{ prescription.medication.name }}</h3>
+                    <h6 class="card-subtitle mb-2 text-muted" style="padding-bottom:10px">Date Prescribed:
+                        {{ prescription.date_prescribed }}</h6>
+                    <p class="card-text">Valid Through: {{ prescription.expiration }}</p>
+                    <p class="card-text">Dose: {{ prescription.dose }}</p>
+                    <a href="{% url 'delete_prescription' prescription.id %}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
 
     {% endfor %}
 
