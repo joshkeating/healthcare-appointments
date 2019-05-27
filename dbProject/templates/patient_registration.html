@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Patient Registration{% endblock %}
 
 {% block content %}
 
 <form action="{% url 'register_patient' %}" method="POST">
+    
     {% csrf_token %}
-    {{ form }}
+    {{ form|crispy }}
+
     <input type="submit" class="btn btn-primary">
 </form>
 

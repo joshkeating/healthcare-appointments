@@ -5,6 +5,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from dbApp.models import Prescription, Appointment
+from django.utils.safestring import mark_safe
+import json
 
 
 def render_registration(request):
@@ -106,4 +108,13 @@ def render_add_medication(request):
     form = MedicationForm()
     return render(request, 'add_medications.html', { 'form': form })
 
+# chat
+
+def chathomepage(request):
+    return render(request, "chat/chatselect.html", {})
+
+def chatroompage(request, room_name):
+    return render(request, 'chat/chatroom.html', {
+    'room_name_json': mark_safe(json.dumps(room_name))
+    })
 

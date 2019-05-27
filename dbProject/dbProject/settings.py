@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_extensions',
     'frontend',
-    'authApp'
+    'authApp',
+    'channels',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -118,10 +120,25 @@ USE_L10N = True
 
 USE_TZ = True
 
+ASGI_APPLICATION = "dbProject.routing.application"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
 DOMAIN_NAME = ''
+
+
+# set form style
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
