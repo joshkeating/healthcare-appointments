@@ -3,17 +3,21 @@
 {% block content %}
 
 <h1>Prescription Information</h1>
+<div style="padding-bottom:40px"></div>
+
 
 {% if user.is_authenticated %}
 
     {% for prescription in user.patient.prescriptions.all %}
 
-        <div>
-            <h3>Prescription  {{forloop.counter0}}</h3>
-            <p>Medication:  {{ prescription.medication.name }}</p>
-            <p>Date Prescribed:  {{ prescription.date_prescribed }}</p>
-            <p>Expiration:  {{ prescription.expiration }}</p>
-            <p>Dose:  {{ prescription.dose }}</p>
+        <div class="card m-3">
+            <div class="card-body">
+                <h5 class="h3">{{ prescription.medication.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted" style="padding-bottom:10px">Date Prescribed:
+                    {{ prescription.date_prescribed }}</h6>
+                <p class="card-text">Valid Through: {{ prescription.expiration }}</p>
+                <p class="card-text">Dose: {{ prescription.dose }}</p>
+            </div>
         </div>
 
     {% endfor %}
