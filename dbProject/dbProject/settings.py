@@ -25,7 +25,12 @@ SECRET_KEY = 'r#f4mr4ox@4)rb#n(yx$h-yy7o9))9w7iwbs0xo2&z5hk5-+_&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'health441.azurewebsites.net',
+    '192.168.99.100'
+]
 
 
 # Application definition
@@ -80,13 +85,27 @@ WSGI_APPLICATION = 'dbProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
+DATABASES = {
+     'default': {
+         'ENGINE': 'sql_server.pyodbc',
+         'NAME': 'uwapp',
+         'USER': 'joncady',
+         'PASSWORD': 'Info441!',
+         'HOST': 'uwtest1.database.windows.net',
+         'PORT': '1433',
+         'OPTIONS': {
+             'driver': 'ODBC Driver 13 for SQL Server',
+             'MARS_Connection': 'True',
+         }
+     }
+ }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

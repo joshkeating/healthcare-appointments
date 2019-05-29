@@ -76,7 +76,7 @@ class Patient(models.Model):
 class Provider(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=14)
-    patients = models.ManyToManyField('Patient', related_name='provider_patients')
+    patients = models.ManyToManyField('Patient', related_name='provider_patients', blank=True)
 
     def get_full_name(self):
         if self.user.first_name is '':

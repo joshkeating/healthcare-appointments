@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  dbproject:
+    image: uwapp.azurecr.io/dbproject:latest
+    build: .
+    ports:
+      - 8000:8000
