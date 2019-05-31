@@ -35,8 +35,9 @@
     //store the room name
     var roomName = {{ room_name_json }};
     var name = {{ name }}
+    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     var chatSocket = new WebSocket(
-        'ws://' + window.location.host +
+        ws_scheme + "://" + window.location.host +
         '/ws/chat/' + roomName + '/');
     //Listener1 - takes the message and add to the chat log text area with a 
     //new line 
