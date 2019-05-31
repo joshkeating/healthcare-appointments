@@ -20,5 +20,4 @@ urlpatterns = [
     path('provider_appointments', render_provider_appointments, name='provider_appointments'),
     path('add_medication', render_add_medication, name='add_medication'),
     re_path(r'^chat/(?P<room_name>[^/]+)/$', chatroompage, name='chatroompageN'),
-
 ]

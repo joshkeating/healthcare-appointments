@@ -6,3 +6,21 @@ services:
     build: .
     ports:
       - 8000:8000
+    environment: # Pass environment variables to the service
+      REDIS_URL: "redis://redis:6379"
+      SECRET_KEY: "r#f4mr4ox@4)rb#n(yx$h-yy7o9))9w7iwbs0xo2&z5hk5-+_&"
+      DEBUG: "True"
+    depends_on:
+      - redis
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+  redis:
+    image: redis:alpine 
+    ports:
+      - 6379:6379
+    restart: always
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+
+networks:
+  backend:
