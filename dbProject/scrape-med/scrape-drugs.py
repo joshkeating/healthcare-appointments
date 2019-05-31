@@ -25,6 +25,27 @@ def get_medication_names():
     return drug_list
 
 
+def get_info():
+    '''get info for meds'''
+
+    # url = 'https://www.drugs.com/' + test + '.html'
+
+    url = 'https://www.drugs.com/meloxicam.html'
+
+    target_page = requests.get(url)
+    html = bs(target_page.text, "html.parser")
+
+    first_five = html.find_all("p", limit=5)
+    target_desc = first_five[2:]
+
+    cur_desc = ""
+
+    for elem in target_desc:
+        cur_desc += elem.text + " "
+
+    print(cur_desc)
+
+    pass
 
 
-get_medication_names()
+get_info()
