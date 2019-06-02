@@ -62,7 +62,7 @@ class PrescriptionForm(forms.Form):
 
 class AppointmentForm(forms.Form):
     date = forms.DateField(required=True, widget=forms.SelectDateWidget)
-    time = forms.ChoiceField(required=True, choices=TIME_CHOICES)
+    time = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'timepicker'}))
     duration = forms.DecimalField(required=True, max_digits=2, decimal_places=1)
     patient = forms.ModelChoiceField(queryset=Patient.objects.all(), required=True)
     note = forms.CharField(widget=forms.Textarea)

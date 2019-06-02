@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Add Medication{% endblock %}
 
@@ -9,7 +10,7 @@
 <form method="POST" action="{% url 'medications' %}">
     <!-- Add cross site request forgery token -->
     {% csrf_token %}
-    {{ form }}
+    {{ form|crispy }}
 
     <button type="submit" class="btn btn-primary">Add</button>
 </form>

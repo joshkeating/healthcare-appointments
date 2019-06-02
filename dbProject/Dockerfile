@@ -22,9 +22,9 @@ RUN apt-get remove -y curl
 # Layers for the django app
 RUN mkdir /app
 WORKDIR /app
-ADD . /app/
-RUN pip install pip --upgrade
+ADD ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
+ADD . /app/
 EXPOSE 8000
 WORKDIR /app/dbProject
 ENTRYPOINT ["python", "/app/manage.py", "runserver", "0.0.0.0:8000"]

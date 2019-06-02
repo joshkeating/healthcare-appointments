@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from dbApp.models import Prescription, Appointment
+from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 import json
 
@@ -111,6 +112,8 @@ def render_add_medication(request):
 
 def chatroompage(request, room_name):
     user = request.user
+    if not user.is_authenticated:
+        return redirect('homepage')
     try:
         patient = user.patient
         first_name = user.first_name

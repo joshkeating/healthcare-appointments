@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -10,7 +11,7 @@
     <form method="POST" action="{% url 'appointments' %}">
         <!-- Add cross site request forgery token -->
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
 
         <button type="submit" class="btn btn-primary">Add Appointment</button>
     </form>
@@ -24,7 +25,8 @@
         <p class="card-text">Date: {{ appointment.date_time }}</p>
         <p class="card-text">Duration: {{ appointment.duration }}</p>
         <p class="card-text">Note: {{ appointment.note }}</p>
-        <a href="#" id="start-appt" class="btn btn-primary" onclick="goToRoom('{{ appointment.patient }}', '{{ appointment.date_time }}')">Start Appointment</a>
+        <a href="#" id="start-appt" class="btn btn-primary"
+            onclick="goToRoom('{{ appointment.patient }}', '{{ appointment.date_time }}')">Start Appointment</a>
         <a href="{% url 'delete_appointment' appointment.id %}" class="btn btn-danger">Delete</a>
     </div>
 </div>
@@ -32,6 +34,20 @@
 {% endfor %}
 
 <script>
+
+    window.onload = function () {
+        $('.timepicker').timepicker({
+            timeFormat: 'h:mm p',
+            interval: 30,
+            minTime: '7',
+            maxTime: '6:00pm',
+            defaultTime: '9',
+            startTime: '7:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    }
 
     const createHashCode = (str) => {
         let hash = 0;
@@ -54,7 +70,7 @@
         window.location.pathname = 'chat/' + roomHash + '/';
     };
 
-    
+
 </script>
 
 {% endif %}
