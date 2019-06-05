@@ -1,6 +1,6 @@
 from django.urls import path, re_path
 
-from .views import render_registration, render_homepage, \
+from .views import render_registration, render_homepage, render_contact, \
     render_login, render_provider_registration, render_patient_prescription, \
     render_provider_prescription, delete_prescription, render_add_prescription, \
     render_patient_appointments, render_provider_appointments, delete_appointment, \
@@ -8,6 +8,7 @@ from .views import render_registration, render_homepage, \
 
 urlpatterns = [
     path('', render_homepage, name="homepage"),
+    path('contactus', render_contact, name="contact"),
     path('patient_registration', render_registration, name="patient_registration"),
     path('provider_registration', render_provider_registration, name="provider_registration"),
     path('login', render_login, name="loginpage"),
