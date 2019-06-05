@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Patient, Provider, Medication, Prescription, Appointment
-from datetimewidget.widgets import DateTimeWidget
 
 
 TIME_CHOICES = (
