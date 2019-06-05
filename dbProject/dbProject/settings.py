@@ -21,14 +21,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
+# SECRET_KEY = 'r#f4mr4ox@4)rb#n(yx$h-yy7o9))9w7iwbs0xo2&z5hk5-+_&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.environ.get("DEBUG") == "True" else False
+# DEBUG = True if os.environ.get("DEBUG") == "True" else False
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'health441.azurewebsites.net',
+    'healthcare441.azurewebsites.net',
     '192.168.99.100'
 ]
 
@@ -86,14 +88,21 @@ WSGI_APPLICATION = 'dbProject.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase',
+#     }
+# }
+
 DATABASES = {
      'default': {
         #  ENGINE: '/usr/lib/libtdsodbc.so.0.0.0'
          'ENGINE': 'sql_server.pyodbc',
-         'NAME': 'uwapp',
+         'NAME': 'info441',
          'USER': 'joncady',
          'PASSWORD': 'Info441!',
-         'HOST': 'uwtest1.database.windows.net',
+         'HOST': 'info441.database.windows.net',
          'PORT': '1433',
          'OPTIONS': {
              'driver': 'ODBC Driver 13 for SQL Server'
@@ -144,7 +153,7 @@ CHANNEL_LAYERS = {
     'default': {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         'CONFIG': {
-            "hosts": [os.environ.get("REDIS_URL")],
+            "hosts": [os.environ.get("REDIS_URL")]
         },
     },
 }
