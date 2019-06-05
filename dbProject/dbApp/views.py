@@ -145,6 +145,7 @@ class AppointmentAPI(APIView):
 
 	def post(self, request, format=None):
 		form = AppointmentForm(request.POST)
+
 		if form.is_valid():
 			date = form.cleaned_data["date"]
 			time_obj = form.cleaned_data["time"]
@@ -153,9 +154,11 @@ class AppointmentAPI(APIView):
 			patient = form.cleaned_data["patient"]
 			provider = request.user.provider
 			note = form.cleaned_data["note"]
+
 			appointment = Appointment(
 				date_time=date_time, duration=duration, patient=patient, provider=provider, note=note)
 			appointment.save()
+			
 			messages.success(request, 'Appointment created!')
 		else:
 			messages.error(request, 'Could not create appointment')

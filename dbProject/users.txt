@@ -13,3 +13,7 @@ Providers
     username: provider1
     password: iamadoctor
 
+
+Azure Users
+    username: joshkeat
+    password: adayinamonthinayear456
