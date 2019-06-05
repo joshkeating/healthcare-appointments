@@ -1,32 +1,22 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Patient, Provider, Medication, Prescription, Appointment
+from datetimewidget.widgets import DateTimeWidget
 
 
-TIME_CHOICES = (('00:00:00', 'Midnight'),
-                    ('01:00:00', '01 AM'),
-                    ('02:00:00', '02 AM'),
-                    ('03:00:00', '03 AM'),
-                    ('04:00:00', '04 AM'),
-                    ('05:00:00', '05 AM'),
-                    ('06:00:00', '06 AM'),
-                    ('07:00:00', '07 AM'),
-                    ('08:00:00', '08 AM'),
-                    ('09:00:00', '09 AM'),
+TIME_CHOICES = (
+                    ('07:00:00', '7 AM'),
+                    ('08:00:00', '8 AM'),
+                    ('09:00:00', '9 AM'),
                     ('10:00:00', '10 AM'),
                     ('11:00:00', '11 AM'),
                     ('12:00:00', 'Noon'),
-                    ('13:00:00', '01 PM'),
-                    ('14:00:00', '02 PM'),
-                    ('15:00:00', '03 PM'),
-                    ('16:00:00', '04 PM'),
-                    ('17:00:00', '05 PM'),
-                    ('18:00:00', '06 PM'),
-                    ('19:00:00', '07 PM'),
-                    ('20:00:00', '08 PM'),
-                    ('21:00:00', '09 PM'),
-                    ('22:00:00', '10 PM'),
-                    ('23:00:00', '11 PM'), )
+                    ('13:00:00', '1 PM'),
+                    ('14:00:00', '2 PM'),
+                    ('15:00:00', '3 PM'),
+                    ('16:00:00', '4 PM'),
+                    ('17:00:00', '5 PM'),
+                )
 
 class MedicationForm(forms.Form):
     name = forms.CharField(max_length=50, required=True)
@@ -62,12 +52,17 @@ class PrescriptionForm(forms.Form):
 
 class AppointmentForm(forms.Form):
     date = forms.DateField(required=True, widget=forms.SelectDateWidget)
-    time = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'timepicker'}))
+    time = forms.ChoiceField(required=True, widget=forms.Select, choices=TIME_CHOICES)
     duration = forms.DecimalField(required=True, max_digits=2, decimal_places=1)
     patient = forms.ModelChoiceField(queryset=Patient.objects.all(), required=True)
     note = forms.CharField(widget=forms.Textarea)
 
 
+
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())
+
+
+
+
