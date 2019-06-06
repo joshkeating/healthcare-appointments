@@ -1,6 +1,6 @@
-# healthcare-appointments
+# Healthcare Chat
 
-A Django web application Healthcare care communication platform 
+A Django web application Healthcare communication platform 
 
 ## The Database
 
@@ -20,7 +20,7 @@ Each of these user types are represented as models in the database and each have
 
  - GET
     - returns all medications in the database
-    - accessible to `Admin`
+    - publicly accessible 
  - POST
     - add medications to the database
     - accessible to `Admin`
@@ -57,9 +57,4 @@ Each of these user types are represented as models in the database and each have
  - PATCH
     - update appointments in the database
     - accessible to `Admin`
-
-#### UserCreationAPI
-
-- POST
-    - add patient to the database
-    - accessible to `Admin`, `Provider`, `Patient`
+    

@@ -22,7 +22,7 @@ from django.http import HttpResponse
 class MedicationAPI(APIView):
 	
 	def get(self, request, format=None):
-		""" get all medications """
+		"""get all medications"""
 		try:
 			medications = Medication.objects.all()
 			serialized_medications = MedicationSerializer(medications, many=True)
