@@ -29,8 +29,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'healthcare441.azurewebsites.net',
-    '192.168.99.100'
+    'healthcare441.azurewebsites.net'
 ]
 
 
@@ -87,16 +86,8 @@ WSGI_APPLICATION = 'dbProject.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'mydatabase',
-#     }
-# }
-
 DATABASES = {
      'default': {
-        #  ENGINE: '/usr/lib/libtdsodbc.so.0.0.0'
          'ENGINE': 'sql_server.pyodbc',
          'NAME': 'info441',
          'USER': 'joncady',

@@ -69,7 +69,6 @@ def patient_registration(request):
 def provider_registration(request):
 	if request.method != "POST":
 		return Response('Method not allowed', status=status.HTTP_405_METHOD_NOT_ALLOWED)
-	print(request.POST)
 	form = ProviderRegistrationForm(request.POST)
 	if form.is_valid():
 		if form.cleaned_data['password1'] == form.cleaned_data['password2']:

@@ -62,7 +62,6 @@ class MedicationAPI(APIView):
 
 class PrescriptionAPI(APIView):
 
-	# @permission_required('dbApp.view_perscriptions')
 	def get(self, request, format=None):
 
 		if request.user.has_perm('dbApp.view_perscriptions'):
@@ -72,11 +71,8 @@ class PrescriptionAPI(APIView):
 		else:
 			return Response("User is not authorized", status=status.HTTP_401_UNAUTHORIZED)
 
-	# @permission_required('dbApp.add_perscriptions')
 	def post(self, request, format=None):
-		# accessible to providers, and admins
 
-		# if request.user.has_perm('dbApp.add_perscriptions'):
 		form = PrescriptionForm(request.POST)
 		if form.is_valid():
 			patient = form.cleaned_data["patient"]
@@ -93,9 +89,6 @@ class PrescriptionAPI(APIView):
 		else:
 			messages.error(request, 'Invalid entry!')
 			return redirect('add_prescription')
-		# else:
-		# 		messages.error(request, 'User does not have persmissions to access this!')
-		# 		return redirect('add_prescription')
 
 	def patch(self, request, format=None):
 		try:
@@ -120,7 +113,6 @@ class PrescriptionAPI(APIView):
 
 
 class AdminAPI(APIView):
-	'''TODO: more HTTP methods'''
 
 	def get(self, request, format=None):
 		'''show all current admins in the system'''

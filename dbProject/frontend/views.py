@@ -57,6 +57,7 @@ def render_provider_prescription(request):
         return redirect('homepage')
 
 def delete_prescription(request, id):
+    """ removes prescription based on id """
     try:
         provider = request.user.provider
         get_object_or_404(Prescription, pk=id).delete()
@@ -65,6 +66,7 @@ def delete_prescription(request, id):
         return redirect('homepage')
 
 def delete_appointment(request, id):
+    """ removes an appointment """
     try:
         provider = request.user.provider
         get_object_or_404(Appointment, pk=id).delete()
@@ -114,8 +116,8 @@ def render_add_medication(request):
     form = MedicationForm()
     return render(request, 'add_medications.html', { 'form': form })
 
-
 def chatroompage(request, room_name):
+    """ renders the chatroom page for either a provider or patient """
     user = request.user
     if not user.is_authenticated:
         return redirect('homepage')

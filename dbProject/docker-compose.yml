@@ -15,7 +15,7 @@ services:
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - backend
   redis:
-    image: redis:alpine 
+    image: redis:alpine
     ports:
       - 6379:6379
     restart: always
